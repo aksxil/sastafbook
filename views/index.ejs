@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+   <link rel="stylesheet" href="stylesheets/style.css">
+   <style>
+    *{
+  margin: 0;
+  padding: 0;
+}
+html,body{
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #333333;
+}
+#main{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  background-color:#333333;
+}
+#main form{
+  height: 200px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-top: -5vh;
+}
+form input{
+ padding: 15px 30px;
+ font-family: gilroy;
+ font-weight: 600;
+ border-radius: 5px;
+ margin: 5px;
+ display: flex;
+ justify-content: center;
+}
+
+#main h1{
+  font-size: 30px;
+  padding: 20px;
+  font-family: voyage;
+  color: white;
+  margin-top: -10vh;
+  margin-bottom: 5vh;
+}
+#sub{
+  background-color: #45f3ff;
+  font-family: voyage;
+  font-size: 3vh;
+}
+#sub:hover{
+  background-color: #d3fcff;
+}
+#login{
+  background-color: #45f3ff;
+  font-family: voyage;
+  font-size: 4vh;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+#login a{
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+}
+   </style>
+</head>
+<body>
+  <div id="main">
+    <h1>Create a account</h1>
+    <form action="/register" method="post">
+      <input type="text" name="name" placeholder="Enter your name">
+      <input id="username" type="text" name="username" placeholder="Enter your username">
+      <input type="text" name="age" placeholder="Enter your age">
+      <input type="email" name="email" placeholder="Enter your email">
+      <!-- <input type="text" name="pic" placeholder="Enter your image link"> -->
+      <input type="password" name="password" placeholder="password">
+      <input id="sub" type="submit">
+       <button id="login"><a href="/login">LOGIN</a></button>
+       <button id="login"><a href="/forgot">Forgot Password</a></button>
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+      <script>
+       var username = document.querySelector("#username")
+
+       username.addEventListener("input",function(){
+        if(username.value.length > 0){
+          axios.get(`/check/${username.value}`)
+          .then(function(data){
+            if(data.data){
+              console.log("data mila")
+              username.style.boxShadow = "0 0 0 0.25rem rgba(255,50,50,.7)";
+              username.style.outlineColor ="red"
+              document.querySelector('#sub').setAttribute("disabled", true);
+            }
+            else{
+              username.style.boxShadow = "0 0 0 0.25rem rgba(13,110,253,.25)";
+              username.style.outlineColor ="green"
+              document.querySelector('#sub').removeAttribute("disabled");
+            }
+          })
+        }
+       })
+      </script>
+</body>
+</html>

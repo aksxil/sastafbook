@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/edit.css">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+  }
+  html,body{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #333333;
+    color: white;
+  }
+  #main{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    background-color: #333333;
+  }
+  #main form{
+    height: 600px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    /* background-color: red; */
+  }
+  form input{
+   padding: 10px 30px;
+   font-family: gilroy;
+   font-weight: 600;
+   border-radius: 5px;
+   display: flex;
+   justify-content: center;
+  }
+  button{
+    padding: 20px 40px ;
+    background-color: #57f4ff;
+    font-size: 24px;
+    font-family: voyage;
+    font-weight: 600;
+  }
+  label{
+    font-family: gilroy;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+  }
+  h1{
+    margin-bottom: 20px;
+    font-family: gilroy;
+  }
+    </style>
+</head>
+<body>
+
+
+      <div id="main">
+        <h1>Update user details</h1>
+        <form action="/update/<%= user._id %>" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<%= user.username %>" required><br>
+          
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= user.name %>" required><br>
+          
+            <label for="age">Age:</label>
+            <input disabled type="number" id="age" name="age" value="<%= user.age %>" required><br>
+          
+            <label for="email">Email:</label>
+            <input disabled type="text" id="email" name="email" value="<%= user.email %>" required><br>
+          
+          
+          
+            <button id="submit" type="submit">Update User</button>
+          </form>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+      <script>
+       var username = document.querySelector("#username")
+
+       username.addEventListener("input",function(){
+        if(username.value.length > 0){
+          axios.get(`/check/${username.value}`)
+          .then(function(data){
+            if(data.data){
+              console.log("data mila")
+              username.style.boxShadow = "0 0 0 0.25rem rgba(255,50,50,.7)";
+              username.style.outlineColor ="red"
+              document.querySelector('#submit').setAttribute("disabled", true);
+            }
+            else{
+              username.style.boxShadow = "0 0 0 0.25rem rgba(13,110,253,.25)";
+              username.style.outlineColor ="green"
+              document.querySelector('#submit').removeAttribute("disabled");
+            }
+          })
+        }
+       })
+      </script>
+    </body>
+</html>
